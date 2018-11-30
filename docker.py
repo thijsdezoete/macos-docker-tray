@@ -19,7 +19,7 @@ class MyTray(NSObject):
 
         self.statusitem = self.statusbar.statusItemWithLength_(NSVariableStatusItemLength)
         self.image = NSImage.alloc().initByReferencingFile_("mydock.icns")
-        self.statusitem.setTitle_(u"Set up %s" % NAME)
+        #self.statusitem.setTitle_(u"Set up %s" % NAME)
         self.statusitem.setImage_(self.image)
         self.statusitem.setHighlightMode_(1)
         self.statusitem.setToolTip_("Docker tray tool")
@@ -27,12 +27,12 @@ class MyTray(NSObject):
 
         self.menu = NSMenu.alloc().init()
 
-        menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Kill', 'killornot:', '')
-        menuitem.setState_(NSOnState if not self.kill else NSOffState)
-        self.menu.addItem_(menuitem)
+        # menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Kill', 'killornot:', '')
+        # menuitem.setState_(NSOnState if not self.kill else NSOffState)
+        # self.menu.addItem_(menuitem)
 
-        menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Docker instances', 'instances:', '')
-        self.menu.addItem_(menuitem)
+        # menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Docker instances', 'instances:', '')
+        # self.menu.addItem_(menuitem)
         menuitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_('Quit', 'terminate:', '')
         self.menu.addItem_(menuitem)
 
@@ -56,6 +56,9 @@ class MyTray(NSObject):
         except subprocess.CalledProcessError as e:
             #print(e)
             self.statusitem.setImage_(self.image)
+            # Keep looping, but don't do anything
+            NSRunLoop.currentRunLoop().addTimer_forMode_(self.timer, NSDefaultRunLoopMode)
+            return
 
         containers = x.splitlines()
 
