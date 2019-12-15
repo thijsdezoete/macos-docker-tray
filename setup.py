@@ -8,7 +8,7 @@ Usage:
 from setuptools import setup
 
 APP = ['docker.py']
-DATA_FILES = []
+DATA_FILES = ['kill.png', 'refresh.png', 'config.json']
 NAME = "Docker Tray Tool"
 OPTIONS = {
     'plist': {
